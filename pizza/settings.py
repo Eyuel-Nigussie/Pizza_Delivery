@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,10 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3x+#6o4hnkp7yooskadsv5^^o9g(u+hb-0j6u8#tj*2@+)6acr'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG',cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -25,7 +25,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+
+    'authentication.apps.AuthenticationConfig',
+    'orders.apps.OrdersConfig',
+    #
+    'rest_framework',
+    "phonenumber_field",
+] 
+
+AUTH_USER_MODEL = 'authentication.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
